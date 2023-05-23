@@ -1,6 +1,5 @@
 package br.tdec.com.intrarest.views.helloworld;
 
-import br.tdec.com.intrarest.views.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
@@ -10,12 +9,15 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
+import br.tdec.com.intrarest.views.MainLayout;
+
 @PageTitle("Hello World")
 @Route(value = "hello", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 public class HelloWorldView extends HorizontalLayout {
 
-    private TextField name;
+    private static final long serialVersionUID = 1L;
+	private TextField name;
     private Button sayHello;
 
     public HelloWorldView() {
