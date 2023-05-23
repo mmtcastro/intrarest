@@ -20,10 +20,10 @@ public class WebClientConfig {
 
 		WebClient webClient = WebClient.create();
 		// Prepare the request body with username and password
-		//authenticate(webClient);
+		// authenticate(webClient);
 		return webClient;
 	}
-	
+
 	@Bean
 	public String token(WebClient webClient) {
 		String authorizationHeader = "Basic bWNhc3RybzpIb2RnZSQ0MDQ=";
@@ -36,9 +36,10 @@ public class WebClientConfig {
 
 		// Store the bearer token for future use
 		System.out.println("Bearer Token: " + token);
+		System.out.println("Token: " + getTokenOnly(token));
 		return getTokenOnly(token);
 	}
-	
+
 	public String getTokenOnly(String token) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -53,7 +54,7 @@ public class WebClientConfig {
 		}
 		return token;
 	}
-	
+
 //	private void authenticate(WebClient webClient) {
 //		String authorizationHeader = "Basic bWNhc3RybzpIb2RnZSQ0MDQ=";
 //		String requestBody = "{\"username\": \"" + "mcastro" + "\", \"password\": \"" + "Hodge$404" + "\"}";

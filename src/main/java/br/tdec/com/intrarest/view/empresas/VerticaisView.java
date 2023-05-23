@@ -19,19 +19,24 @@ public class VerticaisView extends HorizontalLayout {
 	@Autowired
 	private VerticalService verticalService;
 	private Grid<Vertical> grid;
-	
+
 	public VerticaisView(VerticalService verticalService) {
 		grid = new Grid<>(Vertical.class, false);
-		grid.addColumn(Vertical::getId).setHeader("Id");
+
 		grid.addColumn(Vertical::getCodigo).setHeader("Codigo");
 		grid.addColumn(Vertical::getDescricao).setHeader("Descrição");
+		grid.addColumn(Vertical::getStatus).setHeader("Status");
 		grid.addColumn(Vertical::getAutor).setHeader("Autor");
+		grid.addColumn(Vertical::getCriacao).setHeader("Criação");
+		grid.addColumn(Vertical::getId).setHeader("Id");
 
 		List<Vertical> verticais = verticalService.findAll();
 		grid.setItems(verticais);
 		add(grid);
-		
-		System.out.println(verticalService.findAll());
+		verticais.forEach(v -> System.out.print("-> " + v.getCodigo()));
+
+		System.out.println("Size eh " + verticais.size());
+		System.out.println(verticais);
 	}
 
 	public VerticalService getVerticalService() {
