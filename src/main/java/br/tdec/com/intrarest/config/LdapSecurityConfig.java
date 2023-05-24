@@ -5,18 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.ldap.core.support.LdapContextSource;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
-import org.springframework.security.ldap.authentication.BindAuthenticator;
-import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
-import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
-import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class LdapSecurityConfig {
 
-	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+//	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//
 //	      http
 //	       .authorizeHttpRequests()
 //	       .anyRequest().fullyAuthenticated()
@@ -46,32 +40,43 @@ public class LdapSecurityConfig {
 //	       dsCtx.setUserDn("(cn={0})");
 //	       return dsCtx;
 //	    }
-	    // https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form
-		
-	    @Bean
-	    public BaseLdapPathContextSource contextSource() {
-	    	
-	    LdapContextSource bean = new LdapContextSource();
+//	    }
+
+	// https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form
+
+	@Bean
+	public BaseLdapPathContextSource contextSource() {
+
+		LdapContextSource contextSource = new LdapContextSource();
 //	    	LdapContextSource bean = new LdapContextSource();
-	        bean.setUrl("ldap://lexapro.tdec.com.br:389");
-	        bean.setBase("O=TDec");
-	        //instead of this i want to put here the username and password provided by the user
-	        bean.setUserDn("mcastro");
-	        bean.setPassword("Hodge$404");
-	        bean.setPooled(true);
-	        bean.setReferral("follow");
-	        bean.afterPropertiesSet();
-	        return bean;
-	    }
+		contextSource.setUrl("ldap://lexapro.tdec.com.br:389");
+		contextSource.setBase("O=TDec");
+		// instead of this i want to put here the username and password provided by the
+		// user
+		contextSource.setUserDn("mcastro");
+		contextSource.setPassword("Hodge$404");
+		contextSource.setPooled(true);
+		contextSource.setReferral("follow");
+		contextSource.afterPropertiesSet();
 
+		System.out.println("--> Isto eh " + contextSource.getPassword());
 
+		System.out.println("contextSource -> " + contextSource.getContext("CN=Marcelo Castro, O=TDec", "Hodge$404"));
 
-	  @Bean
-	  public LdapTemplate ldapTemplate() {
-	      LdapTemplate template = new LdapTemplate(contextSource());
-
-	      return template;
-	  }
-	  
+		return contextSource;
 	}
+
+	@Bean
+	public LdapTemplate ldapTemplate() {
+		LdapTemplate template = new LdapTemplate(contextSource());
+
+		return template;
+	}
+
+//	public void configure(final AuthenticationManagerBuilder auth) throws Exception {
+//		auth.ldapAuthentication().userSearchFilter("sAMAccountName={0}").contextSource()
+//				.url("ldap://lexapro.tdec.com.br:389)").managerDn("mcastro").managerPassword("Hodge$404");
+//		System.out.println("Auth eh " + auth);
+//	}
+
 }
