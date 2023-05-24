@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "restapi.baseUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'restapi.baseUrl'"
+  },
+  {
+    "name": "restapi.properties.baseUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'restapi.properties.baseUrl'"
+  }
+]}

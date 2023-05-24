@@ -12,8 +12,17 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.Data;
+
+@Data
 @Configuration
 public class WebClientConfig {
+
+	private RestApiProperties restApiProperties;
+
+	public WebClientConfig(RestApiProperties restApiProperties) {
+		this.restApiProperties = restApiProperties;
+	}
 
 	@Bean
 	public WebClient webClient() {
@@ -26,10 +35,13 @@ public class WebClientConfig {
 
 	@Bean
 	public String token(WebClient webClient) {
-		String authorizationHeader = "Basic bWNhc3RybzpIb2RnZSQ0MDQ=";
-		String requestBody = "{\"username\": \"" + "mcastro" + "\", \"password\": \"" + "Hodge$404" + "\"}";
+		String authorizationHeader = restApiProperties.getBasicAuthentication();
+		String requestBody = "{\"username\": \"" + restApiProperties.getU() + "\", \"password\": \""
+				+ restApiProperties.getP() + "\"}";
 		// Make the POST request with Basic Authentication
-		String url = "http://mcastro.tdec.com.br:8880/api/v1/auth";
+		// String url = "http://mcastro.tdec.com.br:8880/api/v1/auth";
+		String url = restApiProperties.getBaseUrl() + "/auth";
+		System.out.println("URL eh " + url);
 		String token = webClient.post().uri(url).header(HttpHeaders.AUTHORIZATION, authorizationHeader)
 				.contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(requestBody)).retrieve()
 				.bodyToMono(String.class).block();
