@@ -43,7 +43,7 @@ public class LdapSecurityConfig {
 //	    }
 
 	// https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form
-
+	// https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-ldap
 	@Bean
 	public BaseLdapPathContextSource contextSource() {
 
