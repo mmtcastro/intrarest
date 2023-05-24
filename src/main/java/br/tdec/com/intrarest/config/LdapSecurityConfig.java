@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
+import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
@@ -45,15 +46,18 @@ public class LdapSecurityConfig {
 //	       dsCtx.setUserDn("(cn={0})");
 //	       return dsCtx;
 //	    }
-	    
+	    // https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form
+		
 	    @Bean
 	    public BaseLdapPathContextSource contextSource() {
-	    	LdapContextSource bean = new LdapContextSource();
-	        bean.setUrl("ldap://10.10.10.10:389");
-	        bean.setBase("DC=myDomaine,DC=com");
+	    	
+	    LdapContextSource bean = new LdapContextSource();
+//	    	LdapContextSource bean = new LdapContextSource();
+	        bean.setUrl("ldap://lexapro.tdec.com.br:389");
+	        bean.setBase("O=TDec");
 	        //instead of this i want to put here the username and password provided by the user
-	        bean.setUserDn("myDomaine\\username");
-	        bean.setPassword("password");
+	        bean.setUserDn("mcastro");
+	        bean.setPassword("Hodge$404");
 	        bean.setPooled(true);
 	        bean.setReferral("follow");
 	        bean.afterPropertiesSet();
@@ -68,4 +72,6 @@ public class LdapSecurityConfig {
 
 	      return template;
 	  }
+	  
+	}
 }
