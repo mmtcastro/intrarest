@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.ldap.core.support.LdapContextSource;
+import org.springframework.security.ldap.authentication.BindAuthenticator;
+import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
+import org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator;
+import org.springframework.security.ldap.userdetails.LdapUserDetailsMapper;
 
 @Configuration
 public class LdapSecurityConfig {
@@ -59,6 +63,13 @@ public class LdapSecurityConfig {
 		contextSource.setReferral("follow");
 		contextSource.afterPropertiesSet();
 
+		LdapAuthenticationProvider authenticationProvider = new LdapAuthenticationProvider(
+				new BindAuthenticator(contextSource), new DefaultLdapAuthoritiesPopulator(contextSource, "O=TDec"));
+		authenticationProvider.setUserDetailsContextMapper(new LdapUserDetailsMapper());
+
+		LdapAuthenticationProvider authenticationProvider = new LdapAuthenticationProvider(
+				new BindAuthenticator(contextSource));
+
 		System.out.println("--> Isto eh " + contextSource.getPassword());
 
 		System.out.println("contextSource -> " + contextSource.getContext("CN=Marcelo Castro, O=TDec", "Hodge$404"));
@@ -69,7 +80,6 @@ public class LdapSecurityConfig {
 	@Bean
 	public LdapTemplate ldapTemplate() {
 		LdapTemplate template = new LdapTemplate(contextSource());
-
 		return template;
 	}
 
