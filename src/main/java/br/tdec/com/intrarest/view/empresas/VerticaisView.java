@@ -6,13 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import br.tdec.com.intrarest.model.empresas.Vertical;
 import br.tdec.com.intrarest.service.VerticalService;
 import br.tdec.com.intrarest.views.MainLayout;
+import jakarta.annotation.security.PermitAll;
 
+@PermitAll
 @Route(value = "verticais", layout = MainLayout.class)
+@PageTitle("Verticais | Intra RESTAPI")
 public class VerticaisView extends HorizontalLayout {
 
 	private static final long serialVersionUID = 1L;
