@@ -1,5 +1,7 @@
 package br.tdec.com.intrarest.view.empresas;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -20,7 +22,11 @@ public class VerticalView extends HorizontalLayout {
 
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
 	private BaseLdapPathContextSource contextSource;
+	
+	@Autowired
+	private LdapTemplate ldapTemplate;
 
 	private TextField id2;
 	private TextField codigo;
@@ -45,19 +51,27 @@ public class VerticalView extends HorizontalLayout {
 		add(id2, codigo, descricao, save, cancel);
 	}
 
-	private void save() {
-		String password = "Hodge$404";
+	private void save()  {
+	
+			String password = "Hodge$404";
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String bcryptPassword = encoder.encode(password);
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String bcryptPassword = encoder.encode(password);
 
-        System.out.println("Bcrypt password: " + bcryptPassword);
-		authenticate("marcelo", "Hodge$404");
+			System.out.println("Bcrypt password: " + bcryptPassword);
+			authenticate("Marcelo Castro", "Hodge$404");
+		
+		
 	}
 
 	public void authenticate(String username, String password) {
-//		contextSource.getContext("cn=" + username + ",o=TDec," + env.getRequiredProperty("ldap.partitionSuffix"),
-//				password);
+		boolean a = ldapTemplate.authenticate("", "(cn="+ username + ")", password);
+		System.out.println("A deu " + a);
+		boolean b = ldapTemplate.authenticate("", "(cn=Marcelo Castro2)", password);
+		System.out.println("B de " + b);
+		
+	   // return contextSource.getContext("CN="+ username+ ", O=TDec", password);
+
 	}
 
 	public TextField getId2() {

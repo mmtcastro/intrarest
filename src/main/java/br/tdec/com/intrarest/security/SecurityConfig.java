@@ -16,7 +16,8 @@ import br.tdec.com.intrarest.view.login.LoginView;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends VaadinWebSecurity {
-
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests().requestMatchers("/images/**").permitAll();
@@ -24,6 +25,11 @@ public class SecurityConfig extends VaadinWebSecurity {
 		setLoginView(http, LoginView.class);
 
 	}
+	
+	
+
+	
+	
 
 	@Bean
 	public UserDetailsService users() {
@@ -35,4 +41,6 @@ public class SecurityConfig extends VaadinWebSecurity {
 				.build();
 		return new InMemoryUserDetailsManager(user, admin);
 	}
+	
+	
 }
