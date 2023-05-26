@@ -1,6 +1,7 @@
 package br.tdec.com.intrarest.view.empresas;
 
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -10,7 +11,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import br.tdec.com.intrarest.views.MainLayout;
+import jakarta.annotation.security.PermitAll;
 
+@PermitAll
 @PageTitle("Vertical")
 @Route(value = "vertical", layout = MainLayout.class)
 public class VerticalView extends HorizontalLayout {
@@ -43,6 +46,12 @@ public class VerticalView extends HorizontalLayout {
 	}
 
 	private void save() {
+		String password = "Hodge$404";
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String bcryptPassword = encoder.encode(password);
+
+        System.out.println("Bcrypt password: " + bcryptPassword);
 		authenticate("marcelo", "Hodge$404");
 	}
 

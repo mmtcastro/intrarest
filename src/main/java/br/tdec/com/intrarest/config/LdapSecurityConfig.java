@@ -67,9 +67,6 @@ public class LdapSecurityConfig {
 				new BindAuthenticator(contextSource), new DefaultLdapAuthoritiesPopulator(contextSource, "O=TDec"));
 		authenticationProvider.setUserDetailsContextMapper(new LdapUserDetailsMapper());
 
-		LdapAuthenticationProvider authenticationProvider = new LdapAuthenticationProvider(
-				new BindAuthenticator(contextSource));
-
 		System.out.println("--> Isto eh " + contextSource.getPassword());
 
 		System.out.println("contextSource -> " + contextSource.getContext("CN=Marcelo Castro, O=TDec", "Hodge$404"));

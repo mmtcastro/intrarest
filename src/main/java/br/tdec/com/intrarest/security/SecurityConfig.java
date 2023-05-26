@@ -33,7 +33,7 @@ public class SecurityConfig extends VaadinWebSecurity {
 				// password = password with this hash, don't tell anybody :-)
 				.password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW").roles("USER").build();
 		UserDetails admin = User.builder().username("Marcelo Castro")
-				.password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW").roles("USER", "ADMIN")
+				.password("{bcrypt}$2a$10$PDQv2Uf0rqZ5tMisuRlcL.6e8Xuay.2/h7zQ3K8XmiVRTHj/pzSiy").roles("USER", "ADMIN")
 				.build();
 		return new InMemoryUserDetailsManager(user, admin);
 	}
