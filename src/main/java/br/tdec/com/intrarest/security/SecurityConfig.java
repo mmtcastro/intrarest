@@ -17,14 +17,12 @@ import br.tdec.com.intrarest.view.login.LoginView;
 @Configuration
 public class SecurityConfig extends VaadinWebSecurity {
 
-	// private static class SimpleInMemoryUserDetailsManager extends
-	// InMemoryUserDetailsManager {
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests().requestMatchers("/images/**").permitAll();
 		super.configure(http);
 		setLoginView(http, LoginView.class);
+
 	}
 
 	@Bean
@@ -37,16 +35,4 @@ public class SecurityConfig extends VaadinWebSecurity {
 				.build();
 		return new InMemoryUserDetailsManager(user, admin);
 	}
-
-//		public SimpleInMemoryUserDetailsManager() {
-//			createUser(
-//					new User("user", "{noop}userpass", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))));
-//			createUser(new User("mcastro", "{noop}Hodge$404",
-//					Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"))));
-//		}
-
-//	@Bean
-//	public InMemoryUserDetailsManager userDetailsService() {
-//		return new SimpleInMemoryUserDetailsManager();
-//	}
 }

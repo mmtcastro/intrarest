@@ -13,46 +13,12 @@ import org.springframework.security.ldap.userdetails.LdapUserDetailsMapper;
 @Configuration
 public class LdapSecurityConfig {
 
-//	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//
-//	      http
-//	       .authorizeHttpRequests()
-//	       .anyRequest().fullyAuthenticated()
-//	       .and()
-//	       .formLogin();
-//	      http.authenticationProvider(ldapAuthenticationProvider());
-//	      return http.build();
-//	    }
-//
-//	    @Bean
-//	    LdapAuthenticationProvider ldapAuthenticationProvider() {
-//	       return new LdapAuthenticationProvider(authenticator());
-//	    }
-//	    
-//	    @Bean
-//	    BindAuthenticator authenticator() {
-//
-//	       FilterBasedLdapUserSearch search = new FilterBasedLdapUserSearch("ou=groups", "(uid={0})", contextSource());
-//	       BindAuthenticator authenticator = new BindAuthenticator(contextSource());
-//	       authenticator.setUserSearch(search);
-//	       return authenticator;
-//	    }
-//
-//	    @Bean
-//	    public DefaultSpringSecurityContextSource contextSource() {
-//	       DefaultSpringSecurityContextSource dsCtx = new DefaultSpringSecurityContextSource("ldap://lexapro.tdec.com.br:389/o=TDec");
-//	       dsCtx.setUserDn("(cn={0})");
-//	       return dsCtx;
-//	    }
-//	    }
-
 	// https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form
 	// https://github.com/eugenp/tutorials/tree/master/spring-security-modules/spring-security-ldap
 	@Bean
 	public BaseLdapPathContextSource contextSource() {
 
 		LdapContextSource contextSource = new LdapContextSource();
-//	    	LdapContextSource bean = new LdapContextSource();
 		contextSource.setUrl("ldap://lexapro.tdec.com.br:389");
 		contextSource.setBase("O=TDec");
 		// instead of this i want to put here the username and password provided by the
@@ -79,11 +45,5 @@ public class LdapSecurityConfig {
 		LdapTemplate template = new LdapTemplate(contextSource());
 		return template;
 	}
-
-//	public void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//		auth.ldapAuthentication().userSearchFilter("sAMAccountName={0}").contextSource()
-//				.url("ldap://lexapro.tdec.com.br:389)").managerDn("mcastro").managerPassword("Hodge$404");
-//		System.out.println("Auth eh " + auth);
-//	}
 
 }
