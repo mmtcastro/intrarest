@@ -1,4 +1,4 @@
-package br.tdec.com.intrarest.view.empresas;
+package br.tdec.com.intrarest.views.empresas;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;

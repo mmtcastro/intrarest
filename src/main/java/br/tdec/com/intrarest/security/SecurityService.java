@@ -8,12 +8,9 @@ import com.vaadin.flow.spring.security.AuthenticationContext;
 public class SecurityService {
 
 	private final AuthenticationContext authenticationContext;
-	
 
 	public SecurityService(AuthenticationContext authenticationContext) {
 		this.authenticationContext = authenticationContext;
-		System.out.println("Quando ele entra aqui no authenticationContext");
-		
 	}
 
 	public void logout() {

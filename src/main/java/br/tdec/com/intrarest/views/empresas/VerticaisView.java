@@ -1,4 +1,4 @@
-package br.tdec.com.intrarest.view.empresas;
+package br.tdec.com.intrarest.views.empresas;
 
 import java.util.List;
 
