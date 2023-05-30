@@ -10,7 +10,6 @@ import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
-import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
 import org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator;
 import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
 
@@ -38,37 +37,22 @@ public class LdapSecurityConfig {
 
 	}
 
-//	@Bean
-//	AuthenticationManager authenticationManager() {
-//		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(contextSource());
-//		factory.setUserDnPatterns("uid={0},O=TDec");
-//		return factory.createAuthenticationManager();
-//	}
-
 	@Bean
-	LdapAuthoritiesPopulator ldapAuthoritiesPopulator() {
-		String groupSearchBase = "O=TDec";
-		DefaultLdapAuthoritiesPopulator authorities = new DefaultLdapAuthoritiesPopulator(contextSource(),
+	LdapAuthoritiesPopulator authorities(BaseLdapPathContextSource contextSource) {
+		String groupSearchBase = "";
+		DefaultLdapAuthoritiesPopulator authorities = new DefaultLdapAuthoritiesPopulator(contextSource,
 				groupSearchBase);
-		authorities.setGroupSearchFilter("O=TDec");
+		// authorities.setGroupSearchFilter("(member={0})");
 		return authorities;
 	}
 
 	@Bean
-	AuthenticationManager ldapAuthenticationManager() {
-		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(contextSource());
-		factory.setUserDnPatterns("uid={0}, O=TDec");
-		factory.setLdapAuthoritiesPopulator(ldapAuthoritiesPopulator());
+	AuthenticationManager authenticationManager(BaseLdapPathContextSource contextSource,
+			LdapAuthoritiesPopulator authorities) {
+		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(contextSource);
+		factory.setUserSearchBase("O=TDec");
+		factory.setUserSearchFilter("(uid={0})");
 		return factory.createAuthenticationManager();
-	}
-
-	@Bean
-	public LdapAuthenticationProvider ldapAuthenticationProvider() {
-		LdapAuthenticationProvider ldapAuthenticationProvider = new LdapAuthenticationProvider(authenticator,
-				ldapAuthoritiesPopulator());
-		return null;
-		// return new LdapAuthenticationProvider(ldapAuthoritiesPopulator(),
-		// ldapAuthenticationManager());
 	}
 
 	@Bean
@@ -80,22 +64,6 @@ public class LdapSecurityConfig {
 	public static String digestSHA(String input) {
 		byte[] encodedBytes = Base64.getEncoder().encode(input.getBytes(StandardCharsets.UTF_8));
 		return new String(encodedBytes, StandardCharsets.UTF_8);
-	}
-
-	@Bean
-	public LdapContextSource ldapContextSource() {
-		LdapContextSource contextSource = new LdapContextSource();
-		contextSource.setUrl("ldap://lexapro.tdec.com.br:389");
-		contextSource.setBase("O=TDec"); // instead of this i want to put here the username and password provided by the
-											// // user
-		contextSource.setUserDn("mcastro");
-		contextSource.setPassword("Hodge$404");
-		contextSource.setPooled(true);
-		contextSource.setReferral("follow");
-		contextSource.afterPropertiesSet();
-
-		return contextSource;
-
 	}
 
 }

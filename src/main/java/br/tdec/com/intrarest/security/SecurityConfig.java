@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 
@@ -45,9 +44,6 @@ public class SecurityConfig extends VaadinWebSecurity {
 //		    http.authenticationProvider(
 //		            new LdapAuthenticationProvider(authenticator, ldapAuthoritiesPopulator));
 
-		http.authenticationManager(ldapAuthenticationManager).authorizeHttpRequests()
-				.requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll();
-
 		super.configure(http);
 
 		// This is important to register your login view to the
@@ -57,7 +53,7 @@ public class SecurityConfig extends VaadinWebSecurity {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// Customize your WebSecurity configuration.
+
 		super.configure(web);
 	}
 
